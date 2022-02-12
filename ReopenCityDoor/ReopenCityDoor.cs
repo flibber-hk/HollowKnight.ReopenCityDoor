@@ -57,14 +57,12 @@ namespace ReopenCityDoor
             scene.DestroyRootGameObject("Ruins_front_gate");
             scene.DestroyRootGameObject("Ruins_gate_0004_a");
             Extensions.CreateTransition(new(30, 58), new(31, 66), "rightRCD", "Crossroads_49b", "leftRCD");
-            Log(HeroController.instance.transform.position);
         }
 
         private void OpenCityGate(Scene scene)
         {
             scene.DestroyRootGameObject("Ruins_front_gate");
             Extensions.CreateTransition(new(-1, 6), new(0, 14), "leftRCD", "Fungus2_08", "rightRCD");
-            Log(HeroController.instance.transform.position);
         }
     }
 }
