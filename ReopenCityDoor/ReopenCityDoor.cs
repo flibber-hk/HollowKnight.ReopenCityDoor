@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 
 namespace ReopenCityDoor
 {
-    public class ReopenCityDoor : Mod
+    public class ReopenCityDoor : Mod, ITogglableMod
     {
         internal static ReopenCityDoor instance;
 
@@ -37,6 +37,11 @@ namespace ReopenCityDoor
             Log("Initializing Mod...");
 
             UnityEngine.SceneManagement.SceneManager.activeSceneChanged += OpenGate;
+        }
+
+        public void Unload()
+        {
+            UnityEngine.SceneManagement.SceneManager.activeSceneChanged -= OpenGate;
         }
 
         private void OpenGate(Scene oldScene, Scene newScene)
