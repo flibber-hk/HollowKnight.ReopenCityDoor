@@ -10,5 +10,8 @@ namespace ReopenCityDoor
     {
         public const string CityGateName = "left_RCD";
         public const string FungalGateName = "right_RCD";
+        public const string FungalCityGateBoolName = "ReopenCityDoor.GateOpen";
+        public const string FungalCityGateItemName = "Fungal_City_Gate_Key";
+        public const string CityGateOpenLogicTerm = "CITYGATEOPEN";
     }
 }

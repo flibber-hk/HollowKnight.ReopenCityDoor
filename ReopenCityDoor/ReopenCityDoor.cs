@@ -7,13 +7,33 @@ using UnityEngine.SceneManagement;
 
 namespace ReopenCityDoor
 {
-    public class ReopenCityDoor : Mod, ITogglableMod
+    public class ReopenCityDoor : Mod, IGlobalSettings<GlobalSettings>, IMenuMod
     {
         internal static ReopenCityDoor instance;
 
+        public static GlobalSettings GS = new();
+        public void OnLoadGlobal(GlobalSettings gs) => GS = gs;
+        public GlobalSettings OnSaveGlobal() => GS;
+
+        public bool ToggleButtonInsideMenu => true;
+        public List<IMenuMod.MenuEntry> GetMenuData(IMenuMod.MenuEntry? toggleButtonEntry)
+        {
+            return new List<IMenuMod.MenuEntry>()
+            {
+                new IMenuMod.MenuEntry
+                {
+                    Name = "Gate state",
+                    Description = "Choose the default state of the city/fungal gate",
+                    Values = new string[] { "Open", "Closed" },
+                    Saver = opt => GS.GateOpen = (opt == 0),
+                    Loader = () => GS.GateOpen ? 0 : 1
+                }
+            };
+        }
+
         /// <summary>
         /// Override whether the gate should be open.
-        /// Input: false on Fungal side, True on City side
+        /// Input: false on Fungal side, true on City side
         /// Output: False to leave the gate closed
         /// </summary>
         public static event Func<bool, bool> ShouldOpenGate;
@@ -37,6 +57,10 @@ namespace ReopenCityDoor
             Log("Initializing Mod...");
 
             UnityEngine.SceneManagement.SceneManager.activeSceneChanged += OpenGate;
+
+            bool rando = ModHooks.GetMod("Randomizer 4") is Mod;
+            bool ic = ModHooks.GetMod("ItemChangerMod") is Mod;
+            Rando.RandoInterop.Hook(rando, ic);
         }
 
         public void Unload()
