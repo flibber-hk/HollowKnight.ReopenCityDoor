@@ -48,10 +48,10 @@ namespace ReopenCityDoor
         {
             switch (newScene.name)
             {
-                case "Fungus2_08" when GetShouldOpenGate(false) || GameManager.instance.entryGateName == "rightRCD":
+                case ItemChanger.SceneNames.Fungus2_08 when GetShouldOpenGate(false) || GameManager.instance.entryGateName == Consts.FungalGateName:
                     OpenFungalGate(newScene);
                     break;
-                case "Crossroads_49b" when GetShouldOpenGate(true) || GameManager.instance.entryGateName == "leftRCD":
+                case ItemChanger.SceneNames.Crossroads_49b when GetShouldOpenGate(true) || GameManager.instance.entryGateName == Consts.CityGateName:
                     OpenCityGate(newScene);
                     break;
             }
@@ -61,13 +61,13 @@ namespace ReopenCityDoor
         {
             scene.DestroyRootGameObject("Ruins_front_gate");
             scene.DestroyRootGameObject("Ruins_gate_0004_a");
-            Extensions.CreateTransition(new(30, 58), new(31, 66), "rightRCD", "Crossroads_49b", "leftRCD");
+            Extensions.CreateTransition(new(30, 58), new(31, 66), Consts.FungalGateName, ItemChanger.SceneNames.Crossroads_49b, Consts.CityGateName);
         }
 
         private void OpenCityGate(Scene scene)
         {
             scene.DestroyRootGameObject("Ruins_front_gate");
-            Extensions.CreateTransition(new(-1, 6), new(0, 14), "leftRCD", "Fungus2_08", "rightRCD");
+            Extensions.CreateTransition(new(-1, 6), new(0, 14), Consts.CityGateName, ItemChanger.SceneNames.Fungus2_08, Consts.FungalGateName);
         }
     }
 }
