@@ -5,7 +5,6 @@ namespace ReopenCityDoor
 {
     public class GlobalSettings
     {
-        [MenuChanger.Attributes.MenuIgnore]
         public bool GateOpen = true;
         
         [JsonConverter(typeof(StringEnumConverter))]
