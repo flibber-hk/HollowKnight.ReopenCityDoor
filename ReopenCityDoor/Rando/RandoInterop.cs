@@ -23,7 +23,7 @@ namespace ReopenCityDoor.Rando
                 DefineLogic();
                 AddMenuPage();
                 AddInfoToRequest();
-                AddToProgressionInitializer();
+                SetInitialization();
             }
         }
 
@@ -192,9 +192,18 @@ namespace ReopenCityDoor.Rando
             }
         }
 
-        private static void AddToProgressionInitializer()
+        private static void SetInitialization()
         {
             ProgressionInitializer.OnCreateProgressionInitializer += UnlockGateInLogic;
+            RandoController.OnExportCompleted += OpenGateOnExportComplete;
+        }
+
+        private static void OpenGateOnExportComplete(RandoController rc)
+        {
+            if (ReopenCityDoor.GS.RandoSetting == GlobalSettings.RandoGateSetting.Open)
+            {
+                ItemChangerMod.Modules.GetOrAdd<CityGateModule>().GateOpen = true;
+            }
         }
 
         private static void UnlockGateInLogic(LogicManager lm, GenerationSettings gs, ProgressionInitializer pi)
