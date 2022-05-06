@@ -39,7 +39,7 @@ namespace ReopenCityDoor
         public static event Func<bool, bool> ShouldOpenGate;
         internal static bool GetShouldOpenGate(bool citySide)
         {
-            return ShouldOpenGate?.Invoke(citySide) ?? true;
+            return ShouldOpenGate?.Invoke(citySide) ?? GS.GateOpen;
         }
 
         public ReopenCityDoor() : base(null)
