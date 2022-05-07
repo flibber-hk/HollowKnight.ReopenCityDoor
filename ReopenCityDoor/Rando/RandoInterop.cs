@@ -203,10 +203,7 @@ namespace ReopenCityDoor.Rando
 
         private static void AddSettingsToLog(LogArguments args, TextWriter tw)
         {
-            tw.WriteLine("Logging ReopenCityDoor settings:");
-            using Newtonsoft.Json.JsonTextWriter jtw = new(tw) { CloseOutput = false, };
-            RandomizerMod.RandomizerData.JsonUtil._js.Serialize(jtw, ReopenCityDoor.GS);
-            tw.WriteLine();
+            tw.WriteLine($"ReopenCityDoor.RandoSetting: {ReopenCityDoor.GS.RandoSetting}");
         }
 
         private static void OpenGateOnExportComplete(RandoController rc)
