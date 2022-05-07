@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
 using ItemChanger;
 using ItemChanger.Items;
@@ -7,6 +8,7 @@ using ItemChanger.UIDefs;
 using RandomizerCore;
 using RandomizerCore.Logic;
 using RandomizerCore.LogicItems;
+using RandomizerMod.Logging;
 using RandomizerMod.RC;
 using RandomizerMod.Settings;
 
@@ -196,6 +198,15 @@ namespace ReopenCityDoor.Rando
         {
             ProgressionInitializer.OnCreateProgressionInitializer += UnlockGateInLogic;
             RandoController.OnExportCompleted += OpenGateOnExportComplete;
+            SettingsLog.AfterLogSettings += AddSettingsToLog;
+        }
+
+        private static void AddSettingsToLog(LogArguments args, TextWriter tw)
+        {
+            tw.WriteLine("Logging ReopenCityDoor settings:");
+            using Newtonsoft.Json.JsonTextWriter jtw = new(tw) { CloseOutput = false, };
+            RandomizerMod.RandomizerData.JsonUtil._js.Serialize(jtw, ReopenCityDoor.GS);
+            tw.WriteLine();
         }
 
         private static void OpenGateOnExportComplete(RandoController rc)
