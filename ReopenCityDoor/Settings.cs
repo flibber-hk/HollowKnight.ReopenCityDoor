@@ -16,5 +16,7 @@ namespace ReopenCityDoor
             Unlockable,
         }
         public RandoGateSetting RandoSetting = RandoGateSetting.Disabled;
+
+        public bool IsRandoEnabled() => RandoSetting != RandoGateSetting.Disabled;
     }
 }

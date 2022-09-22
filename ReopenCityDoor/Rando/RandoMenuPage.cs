@@ -33,15 +33,28 @@ namespace ReopenCityDoor.Rando
         {
             JumpToRPButton = new(landingPage, Localize("ReopenCityDoor"));
             JumpToRPButton.AddHideAndShowEvent(landingPage, ReopenCityDoorPage);
+            SetTopLevelButtonColor();
+
             button = JumpToRPButton;
             return true;
         }
+
+        private void SetTopLevelButtonColor()
+        {
+            if (JumpToRPButton != null)
+            {
+                JumpToRPButton.Text.color = ReopenCityDoor.GS.IsRandoEnabled() ? Colors.TRUE_COLOR : Colors.DEFAULT_COLOR;
+            }
+        }
+
 
         private void ConstructMenu(MenuPage landingPage)
         {
             ReopenCityDoorPage = new MenuPage(Localize("ReopenCityDoor"), landingPage);
             cityDoorButton = new(ReopenCityDoorPage, "Fungal-City Door");
             cityDoorButton.Bind(ReopenCityDoor.GS, typeof(GlobalSettings).GetField(nameof(GlobalSettings.RandoSetting)));
+            cityDoorButton.SelfChanged += obj => SetTopLevelButtonColor();
+
             rcdVIP = new(ReopenCityDoorPage, new(0, 300), 50f, true, new[] { cityDoorButton });
             Localize(cityDoorButton);
         }
