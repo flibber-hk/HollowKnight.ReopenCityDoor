@@ -5,6 +5,7 @@ using ItemChanger;
 using ItemChanger.Items;
 using ItemChanger.Tags;
 using ItemChanger.UIDefs;
+using Modding;
 using RandomizerCore;
 using RandomizerCore.Logic;
 using RandomizerCore.LogicItems;
@@ -26,6 +27,11 @@ namespace ReopenCityDoor.Rando
                 AddMenuPage();
                 AddInfoToRequest();
                 SetInitialization();
+
+                if (ModHooks.GetMod("RandoSettingsManager") is not null)
+                {
+                    RandoSettingsManagerInterop.Hook();
+                }
             }
         }
 

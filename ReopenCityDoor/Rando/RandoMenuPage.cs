@@ -58,5 +58,10 @@ namespace ReopenCityDoor.Rando
             rcdVIP = new(ReopenCityDoorPage, new(0, 300), 50f, true, new[] { cityDoorButton });
             Localize(cityDoorButton);
         }
+
+        internal void UpdateMenu()
+        {
+            Instance.cityDoorButton.SetValue(ReopenCityDoor.GS.RandoSetting);
+        }
     }
 }
