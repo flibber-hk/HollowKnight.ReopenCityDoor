@@ -61,7 +61,7 @@ namespace ReopenCityDoor.Rando
 
         internal void UpdateMenu()
         {
-            Instance.cityDoorButton.SetValue(ReopenCityDoor.GS.RandoSetting);
+            cityDoorButton.SetValue(ReopenCityDoor.GS.RandoSetting);
         }
     }
 }

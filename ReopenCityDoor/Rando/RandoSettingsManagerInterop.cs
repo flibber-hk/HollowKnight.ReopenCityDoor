@@ -21,7 +21,7 @@ namespace ReopenCityDoor.Rando
 
         public override void ReceiveSettings(GlobalSettings settings)
         {
-            ReopenCityDoor.GS.LoadRandoFrom(settings);
+            ReopenCityDoor.GS.LoadRandoFrom(settings ?? new());
             RandoMenuPage.Instance.UpdateMenu();
         }
 
