@@ -14,28 +14,22 @@ namespace ReopenCityDoor.Rando
         internal VerticalItemPanel rcdVIP;
 
         internal SmallButton JumpToRPButton;
-
-        private static RandoMenuPage _instance = null;
-        internal static RandoMenuPage Instance => _instance ?? (_instance = new RandoMenuPage());
+        internal static RandoMenuPage Instance { get; private set; }
 
         public static void OnExitMenu()
         {
-            _instance = null;
+            Instance = null;
         }
 
         public static void Hook()
         {
-            RandomizerMenuAPI.AddMenuPage(Instance.ConstructMenu, Instance.HandleButton);
+            RandomizerMenuAPI.AddMenuPage(ConstructMenu, HandleButton);
             MenuChangerMod.OnExitMainMenu += OnExitMenu;
         }
 
-        private bool HandleButton(MenuPage landingPage, out SmallButton button)
+        private static bool HandleButton(MenuPage landingPage, out SmallButton button)
         {
-            JumpToRPButton = new(landingPage, Localize("ReopenCityDoor"));
-            JumpToRPButton.AddHideAndShowEvent(landingPage, ReopenCityDoorPage);
-            SetTopLevelButtonColor();
-
-            button = JumpToRPButton;
+            button = Instance.JumpToRPButton;
             return true;
         }
 
@@ -48,7 +42,9 @@ namespace ReopenCityDoor.Rando
         }
 
 
-        private void ConstructMenu(MenuPage landingPage)
+        private static void ConstructMenu(MenuPage landingPage) => Instance = new(landingPage);
+
+        private RandoMenuPage(MenuPage landingPage)
         {
             ReopenCityDoorPage = new MenuPage(Localize("ReopenCityDoor"), landingPage);
             cityDoorButton = new(ReopenCityDoorPage, "Fungal-City Door");
@@ -57,6 +53,10 @@ namespace ReopenCityDoor.Rando
 
             rcdVIP = new(ReopenCityDoorPage, new(0, 300), 50f, true, new[] { cityDoorButton });
             Localize(cityDoorButton);
+
+            JumpToRPButton = new(landingPage, Localize("ReopenCityDoor"));
+            JumpToRPButton.AddHideAndShowEvent(landingPage, ReopenCityDoorPage);
+            SetTopLevelButtonColor();
         }
 
         internal void UpdateMenu()
