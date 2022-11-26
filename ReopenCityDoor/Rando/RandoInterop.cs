@@ -20,19 +20,23 @@ namespace ReopenCityDoor.Rando
         public static void Hook(bool rando, bool ic)
         {
             if (ic) DefineGateItem();
-            
-            if (rando)
-            {
-                DefineLogic();
-                AddMenuPage();
-                AddInfoToRequest();
-                SetInitialization();
 
-                if (ModHooks.GetMod("RandoSettingsManager") is not null)
-                {
-                    RandoSettingsManagerInterop.Hook();
-                }
+            if (rando) HookRandomizer();
+        }
+
+        private static void HookRandomizer()
+        {
+            DefineLogic();
+            AddMenuPage();
+            AddInfoToRequest();
+            SetInitialization();
+
+            if (ModHooks.GetMod("RandoSettingsManager") is not null)
+            {
+                RandoSettingsManagerInterop.Hook();
             }
+
+            CondensedSpoilerLogger.AddCategory("ReopenCityDoor", (args) => true, new() { Consts.FungalCityGateItemName });
         }
 
         private static void DefineLogic()
