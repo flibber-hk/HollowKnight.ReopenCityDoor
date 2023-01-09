@@ -228,14 +228,8 @@ namespace ReopenCityDoor.Rando
         {
             if (ReopenCityDoor.GS.RandoSetting == GlobalSettings.RandoGateSetting.Open)
             {
-                if (lm.TermLookup.TryGetValue(Consts.CityGateOpenLogicTerm, out Term t))
-                {
-                    pi.Setters.Add(new TermValue(t, 1));
-                }
-                else
-                {
-                    ReopenCityDoor.instance.LogError("Term not found");
-                }
+                Term t = lm.GetTermStrict(Consts.CityGateOpenLogicTerm);
+                pi.Setters.Add(new TermValue(t, 1));
             }
         }
 
